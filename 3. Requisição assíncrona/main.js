@@ -32,15 +32,18 @@ inputCep.addEventListener('input', async (event) =>  {
 
 function validData(data){
     const cepError = document.getElementById('cepError');
+    const cep = document.getElementById('cep');
 
     // Mostra a div caso o cep seja inválido
     if (data.erro){
         cepError.classList.remove('hidden');
+        cep.classList.add('input-cep-error');
         clearFormFields();
         return false;
-    // Remove a div
+    // Esconde a div
     } else {
         cepError.classList.add('hidden');
+        cep.classList.remove('input-cep-error');
         return true;
     }
 }
