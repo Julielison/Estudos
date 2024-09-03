@@ -5,6 +5,8 @@ inputCep.addEventListener('keydown', (event) => {
         event.preventDefault();
         
         // Invalida o cep digitado
+        inputCep.value = '';
+        inputCep.placeholder = 'O CEP deve ter 8 dígitos';
         let data = {erro: true};
         validData(data);
     }
