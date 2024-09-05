@@ -38,10 +38,14 @@ def decToBin( num: int ) -> None:
 n = 5
 decToBin(n)
 
+# leia as chamadas de cima pra baixo e os prints de baixo pra cima
 '''
-(3): 
-    await print(1)
-    (1):
-        await print(1)
-            return
+(5):
+    await print(1, end='')
+    (2):
+        await print(0, end='')
+        (1):
+            await print(1, end='')
+            (0):
+                return
 '''
