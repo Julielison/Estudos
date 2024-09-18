@@ -25,7 +25,7 @@ class CPU:
             for p in cls.fila_prontos:
                 cls.adicionar_na_tabela(dados, p)
 
-        print(tabulate(dados, headers=cabecalhos, tablefmt="grid"))
+        print(tabulate(dados, headers=cabecalhos, tablefmt="fancy_grid"))
 
     @classmethod
     def exibir_tudo(cls, tempo):
@@ -43,22 +43,19 @@ class CPU:
         lista = Processos.processos.get(tempo, [])
         for p in lista:
             cls.fila_prontos.append(p)
-            if len(cls.fila_prontos) > 0:
+
+        if len(cls.fila_prontos) > 0:
+            if cls.fila_prontos[0].status == 'ESPERANDO':
                 cls.fila_prontos[0].status = 'EXECUTANDO'
+                cls.fila_prontos[0].tempo_inicio_execução = tempo
+                cls.fila_prontos[0].tempo_resposta = p.tempo_inicio_execução - p.tempo_chegada
     
     @classmethod
-    def executar_processo(cls, tempo):
+    def executar_processo(cls):
         if len(cls.fila_prontos) > 0:
             p = cls.fila_prontos[0]
             p.tempo_executado += 1
 
-            if p.tempo_executado == p.tempo_execucao:
-                p.status = 'FINALIZADO'
-                p.tempo_conclusao = tempo
-                p.turnaround = tempo - p.tempo_chegada
-                cls.finalizados.append(cls.fila_prontos.pop(0))
-                if len(cls.fila_prontos) > 0:
-                    cls.fila_prontos[0].status = 'EXECUTANDO'
 
     @classmethod
     def contar_espera(cls) -> None:
@@ -66,6 +63,30 @@ class CPU:
 
         for i in range(1,len(prontos)):
             prontos[i].tempo_espera += 1
+
+
+    @classmethod
+    def finalizar_processo(cls, tempo):
+        prontos = cls.fila_prontos
+
+        if prontos:
+            p = prontos[0]
+            if p.tempo_executado == p.tempo_execucao:
+                p.status = 'FINALIZADO'
+                p.tempo_conclusao = tempo
+                p.turnaround = tempo - p.tempo_chegada
+                cls.finalizados.append(cls.fila_prontos.pop(0))
+
+    @classmethod
+    def atualiza_executando(cls, tempo):
+        prontos = cls.fila_prontos
+        
+        if prontos:
+            p = prontos[0]
+            if p.status == 'ESPERANDO':
+                p.status = 'EXECUTANDO'
+                p.tempo_inicio_execução = tempo
+                p.tempo_resposta = p.tempo_inicio_execução - p.tempo_chegada
 
     @classmethod
     def calcular_tempo_médio_espera(cls):
@@ -87,5 +108,5 @@ class CPU:
         cls.calcular_tempo_médio_espera()
         cls.calcular_throughput(tempo)
         print('Dados dos processos finalizados:')
-        print(f'Throughput: {Processos.throughput} p/s')
-        print(f'Tempo médio de espera:', Processos.tempo_medio_espera)
+        print(f'Throughput: {Processos.throughput:.2f} p/u')
+        print(f'Tempo médio de espera:', round(Processos.tempo_medio_espera, 2), 'u')

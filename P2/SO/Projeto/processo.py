@@ -6,12 +6,12 @@ class Processo:
         self.tempo_chegada = tempo_chegada
         self.tempo_execucao = tempo_execucao
         self.tempo_espera = 0
-        self.tempo_conclusao = None
+        self.tempo_conclusao = '-'
         self.status = 'ESPERANDO'
-        self.turnaround = None
+        self.turnaround = '-'
         self.tempo_inicio_execução = None
         self.tempo_executado = 0
-        self.tempo_resposta = None
+        self.tempo_resposta = '-'
 
 
 class Processos:

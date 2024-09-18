@@ -19,6 +19,8 @@ def main():
 
     while True:
         CPU.carregar_processo(tempo)
+        CPU.atualiza_executando(tempo)
+
         if len(CPU.fila_prontos) == 0:
             CPU.estado = 'Ociosa'
         else:
@@ -29,14 +31,15 @@ def main():
             break
 
         op = input('x: sair\nEnter: continuar\n')
-        match op:
-            case 'x':
+        if op == 'x':
                 break
 
         tempo += 1
 
         CPU.contar_espera()
-        CPU.executar_processo(tempo)
+        CPU.executar_processo()
+        CPU.finalizar_processo(tempo)
+        CPU.atualiza_executando(tempo)
     
     CPU.exibir_metricas_finais(tempo)
 
