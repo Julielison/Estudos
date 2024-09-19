@@ -1,6 +1,4 @@
 class Processo:
-    processos = {}
-
     def __init__(self, nome: str, tempo_execucao: int, tempo_chegada: int) -> None:
         self.nome = nome
         self.tempo_chegada = tempo_chegada

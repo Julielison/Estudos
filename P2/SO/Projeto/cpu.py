@@ -2,6 +2,12 @@ from processo import *
 from tabulate import tabulate
 import os
 
+def limpar_terminal():
+    # Verifica se o sistema é Windows
+    if os.name == 'nt':
+        os.system('cls')  # Comando para Windows
+    else:
+        os.system('clear')  # Comando para Linux e macOS
 
 class CPU:
     fila_prontos = list()
@@ -29,7 +35,7 @@ class CPU:
 
     @classmethod
     def exibir_tudo(cls, tempo):
-        os.system('cls')
+        limpar_terminal()
         cls.exibir_painel(tempo)
         cls.exibir_fila()
 
@@ -101,12 +107,25 @@ class CPU:
 
     @classmethod
     def calcular_throughput(cls, tempo) -> None:
-        Processos.throughput = Processos.quantidade_processos / tempo
+        Processos.throughput = len(cls.finalizados) / tempo
 
     @classmethod
     def exibir_metricas_finais(cls, tempo):
+        if len(cls.finalizados) == 0 or tempo == 0:
+            print('Sem dados para exibir!')
+            return
         cls.calcular_tempo_médio_espera()
         cls.calcular_throughput(tempo)
         print('Dados dos processos finalizados:')
         print(f'Throughput: {Processos.throughput:.2f} p/u')
         print(f'Tempo médio de espera:', round(Processos.tempo_medio_espera, 2), 'u')
+
+    @classmethod
+    def restaurar_cpu(cls) -> None:
+        cls.fila_prontos = list()
+        cls.finalizados = list()
+        cls.estado = 'Trabalhando'
+        Processos.processos = {}
+        Processos.quantidade_processos = 0
+        Processos.tempo_medio_espera = '-'
+        Processos.throughput = None
