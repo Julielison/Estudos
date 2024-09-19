@@ -44,7 +44,7 @@ Escolha uma das opções de simulação:
             if len(CPU.finalizados) == 5:
                 break
 
-            op = input('x: sair\nQualquer tecla: continuar\n').lower()
+            op = input('x: sair\nEnter: continuar\n').lower()
             if op == 'x':
                     break
 
