@@ -1,13 +1,6 @@
 from processo import *
 from tabulate import tabulate
-import os
-
-def limpar_terminal():
-    # Verifica se o sistema é Windows
-    if os.name == 'nt':
-        os.system('cls')  # Comando para Windows
-    else:
-        os.system('clear')  # Comando para Linux e macOS
+from util import limpar_terminal, exibir_erro
 
 class CPU:
     fila_prontos = list()
@@ -17,7 +10,7 @@ class CPU:
     @classmethod
     def exibir_painel(cls, cronometro):
         print('CPU status:', cls.estado)
-        print('Timer:', cronometro)
+        print('Timer:', cronometro, 'u')
 
     @classmethod
     def exibir_fila(cls) -> None:
@@ -50,11 +43,11 @@ class CPU:
         for p in lista:
             cls.fila_prontos.append(p)
 
-        if len(cls.fila_prontos) > 0:
-            if cls.fila_prontos[0].status == 'ESPERANDO':
-                cls.fila_prontos[0].status = 'EXECUTANDO'
-                cls.fila_prontos[0].tempo_inicio_execução = tempo
-                cls.fila_prontos[0].tempo_resposta = p.tempo_inicio_execução - p.tempo_chegada
+        # if len(cls.fila_prontos) > 0:
+        #     if cls.fila_prontos[0].status == 'ESPERANDO':
+        #         cls.fila_prontos[0].status = 'EXECUTANDO'
+        #         cls.fila_prontos[0].tempo_inicio_execução = tempo
+        #         cls.fila_prontos[0].tempo_resposta = p.tempo_inicio_execução - p.tempo_chegada
     
     @classmethod
     def executar_processo(cls):
@@ -109,16 +102,19 @@ class CPU:
     def calcular_throughput(cls, tempo) -> None:
         Processos.throughput = len(cls.finalizados) / tempo
 
+
     @classmethod
     def exibir_metricas_finais(cls, tempo):
         if len(cls.finalizados) == 0 or tempo == 0:
             print('Sem dados para exibir!')
             return
+        
         cls.calcular_tempo_médio_espera()
         cls.calcular_throughput(tempo)
         print('Dados dos processos finalizados:')
         print(f'Throughput: {Processos.throughput:.2f} p/u')
         print(f'Tempo médio de espera:', round(Processos.tempo_medio_espera, 2), 'u')
+
 
     @classmethod
     def restaurar_cpu(cls) -> None:
@@ -129,3 +125,22 @@ class CPU:
         Processos.quantidade_processos = 0
         Processos.tempo_medio_espera = '-'
         Processos.throughput = None
+
+    @classmethod
+    def escolher_modo_execução(cls) -> bool:
+        limpar_terminal()
+        while True:
+            print('Escolha como o timer será passado:')
+            print('1. Manual (melhor para entender o passo a passo)')
+            print('2. Automático (mais prático)')
+            opcao = input()
+
+            match opcao:
+                case '1':
+                    return False
+                case '2':
+                    return True
+                case _:
+                    limpar_terminal()
+                    exibir_erro()
+                    continue
