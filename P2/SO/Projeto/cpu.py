@@ -32,22 +32,63 @@ class CPU:
         cls.exibir_painel(tempo)
         cls.exibir_fila()
 
+
     @classmethod
     def adicionar_na_tabela(cls, dados, p: Processo) -> None:
         dados.append([p.nome, p.tempo_chegada, p.tempo_execucao, p.tempo_executado
                       , p.tempo_espera, p.tempo_conclusao, p.turnaround, p.tempo_resposta, p.status])
 
+
     @classmethod
     def carregar_processo(cls, tempo: int) -> None:
         lista = Processos.processos.get(tempo, [])
-        for p in lista:
+        
+        if lista:   
+            if len(lista) > 1:
+                lista = CPU.ordenar_processos(lista, tempo)
+                return
+
+            cls.fila_prontos.append(lista[0])
+    
+    @classmethod
+    def ordenar_processos(cls, lista, tempo) -> list:
+        print(f'Os processos abaixo chegaram no tempo {tempo}.')
+        print('Você precisa ordená-los na fila!')
+
+        hashtable = {}
+        
+        for i in range(len(lista)):
+            hashtable[str(i)] = lista[i]
+
+        i = 0
+        while i < len(hashtable):
+            print('Ordene todos eles primeiro!')
+            dados = []
+            cabecalhos = ['Índice', 'Processo', 'Execução']
+
+            for id, p in hashtable.items():
+                dados.append([id, p.nome, p.tempo_execucao])
+
+            print(tabulate(dados, headers=cabecalhos, tablefmt="grid"))
+
+            posição = len(cls.finalizados) + len(cls.fila_prontos)
+            indice = input(f'Digite o índice de quem será o {posição+1}° da fila: ')
+
+            try:
+                p = hashtable[indice]
+            except KeyError:
+                cls.exibir_tudo(tempo)
+                print('Índice inexistente!\nDigite um índice válido!')
+                continue
+
+            cls.fila_prontos.append(hashtable.pop(indice))
+            i += 1
+            limpar_terminal()
+
+        for p in hashtable.values():
             cls.fila_prontos.append(p)
 
-        # if len(cls.fila_prontos) > 0:
-        #     if cls.fila_prontos[0].status == 'ESPERANDO':
-        #         cls.fila_prontos[0].status = 'EXECUTANDO'
-        #         cls.fila_prontos[0].tempo_inicio_execução = tempo
-        #         cls.fila_prontos[0].tempo_resposta = p.tempo_inicio_execução - p.tempo_chegada
+
     
     @classmethod
     def executar_processo(cls):
