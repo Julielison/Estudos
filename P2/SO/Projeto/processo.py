@@ -18,7 +18,8 @@ class Processos:
     processos = {}
     quantidade_processos = 0
     tempo_medio_espera = '-'
-    throughput = None
+    throughput = '-'
+    turnaround_medio = '-'
 
     @classmethod
     def adicionar_processo(cls, processo:Processo, tempo_chegada:int) -> None:

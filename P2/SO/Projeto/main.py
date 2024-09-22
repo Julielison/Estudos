@@ -14,12 +14,6 @@ def selecionar_arquivo(nome_arquivo: str) -> None:
             Processos.adicionar_processo(processo, processo.tempo_chegada)
 
 
-'''
-Algoritmo
-Escolhe os processos que serão escalonados (pré-definidos)
-Escolhe o modo de execução (automático ou manual)
-'''
-
 
 def main():
     limpar_terminal()

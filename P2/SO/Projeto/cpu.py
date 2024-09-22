@@ -152,9 +152,19 @@ class CPU:
         
         cls.calcular_tempo_médio_espera()
         cls.calcular_throughput(tempo)
+        cls.calcular_turnaround_medio()
         print('Dados dos processos finalizados:')
         print(f'Throughput: {Processos.throughput:.2f} p/u')
         print(f'Tempo médio de espera:', round(Processos.tempo_medio_espera, 2), 'u')
+        print(f'Turnaround médio: {round(Processos.turnaround_medio, 2)} u')
+
+    
+    @classmethod
+    def calcular_turnaround_medio(cls) -> None:
+        soma = 0
+        for p in CPU.finalizados:
+            soma += p.turnaround
+        Processos.turnaround_medio = soma / len(CPU.finalizados)
 
 
     @classmethod
@@ -165,7 +175,7 @@ class CPU:
         Processos.processos = {}
         Processos.quantidade_processos = 0
         Processos.tempo_medio_espera = '-'
-        Processos.throughput = None
+        Processos.throughput = '-'
 
     @classmethod
     def escolher_modo_execução(cls) -> bool:
