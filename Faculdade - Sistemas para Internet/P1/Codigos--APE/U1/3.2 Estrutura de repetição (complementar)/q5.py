@@ -1,0 +1,1 @@
+#Faça um programa que, leia a temperatura dos 30 dias do mês de abril diga qual o dia mais quente e o dia mais frio do mês (obs: suponha que não haja empates).

@@ -1,0 +1,1 @@
+#Um dado material radioativo perde metade de sua massa a cada 50 segundos. Faça um programa que leia uma certa quantidade de massa, em gramas, deste material e imprima o tempo necessário para que sua massa se torne menor que 0.5g.
