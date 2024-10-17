@@ -272,3 +272,6 @@ build/
 ### VS Code ###
 .vscode/
 **/application.properties
+
+# Projetos (repositório próprio)
+Projetos
