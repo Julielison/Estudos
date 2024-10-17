@@ -1,18 +1,34 @@
-## Getting Started
+# Contador em Java
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
+Este programa consiste em receber dois inputs de valores inteiros do usuário e imprimir na tela um contador que inicia em 1 e vai até a diferença entre o segundo valor e o primeiro valor. Caso o segundo valor seja menor que o primeiro, uma exceção é lançada com sua respectiva mensagem.
 
-## Folder Structure
+## Tabela de Conteúdos
 
-The workspace contains two folders by default, where:
+- Descrição
+- Features
+- Demonstração da Aplicação
 
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
+## Descrição
 
-Meanwhile, the compiled output files will be generated in the `bin` folder by default.
+O programa solicita ao usuário que insira dois números. Em seguida, ele conta a diferença entre esses dois números e imprime os números de 1 até essa diferença. Se o primeiro número for maior que o segundo, o programa lançará uma exceção `ParametrosInvalidosException`.
 
-> If you want to customize the folder structure, open `.vscode/settings.json` and update the related settings there.
+## Features
 
-## Dependency Management
+- Solicita ao usuário dois números
+- Conta a diferença entre os dois números
+- Imprime os números de 1 até a diferença
+- Lança uma exceção se o primeiro número for maior que o segundo
 
-The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
+## Demonstração da Aplicação
+
+```shell
+Digite o primeiro parâmetro
+5
+Digite o segundo parâmetro
+10
+Imprimindo o número 1
+Imprimindo o número 2
+Imprimindo o número 3
+Imprimindo o número 4
+Imprimindo o número 5
+```
