@@ -1,7 +1,10 @@
 public class Main {
-    int x = 0;
-
+    static int x = 0;
+    
     public static void main(String[] args) {
-        Main 
-    }
+        Main obj = new Main();
+        obj.x = 12;
+        System.out.println(obj.x);
+        System.out.println(Main.x);
+}
 }
